@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Live Examination | ExamSphere Pro</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="exam-body">
+
+<!-- TOPBAR -->
+<header class="exam-topbar">
+
+    <div class="logo">EXAM<span>SPHERE</span></div>
+
+    <div class="exam-header-center">
+        <span class="subject-pill" id="examSubjectLabel">SUBJECT</span>
+        <b id="examTitle" class="exam-header-title">Online Examination</b>
+    </div>
+
+    <div class="exam-topbar-controls">
+        <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeToggleBtn">🌙 Dark</button>
+        <button class="btn-fullscreen" onclick="toggleFullscreen()" title="Toggle Fullscreen">
+            ⛶ Fullscreen
+        </button>
+
+        <div class="exam-timer" id="timerBadge">
+            ⏱ <span id="timer">--:--</span>
+        </div>
+    </div>
+
+</header>
+
+
+<!-- MAIN EXAM LAYOUT -->
+<main class="exam-layout">
+
+    <!-- LEFT: QUESTION AREA -->
+    <section class="question-area">
+
+        <div class="question-header">
+            <div>
+                <span id="questionPosition" class="q-pos-badge">QUESTION 1 OF 1</span>
+                <h2 id="examSubjectHeading" class="exam-title-sub">Exam</h2>
+            </div>
+            <div class="question-mark-info">
+                <span class="badge-positive" id="questionMarksBadge">+1 Mark</span>
+            </div>
+        </div>
+
+        <!-- DYNAMIC QUESTION CONTENT CARD -->
+        <div class="question-card" id="questionCard">
+            <div class="loading-spinner">
+                <p>Loading examination questions...</p>
+            </div>
+        </div>
+
+        <!-- QUESTION ACTIONS (REVIEW & CLEAR) -->
+        <div class="question-tool-actions">
+            <button class="btn-tool flag-btn" id="flagBtn" onclick="toggleMarkForReview()">
+                🚩 Mark for Review
+            </button>
+            <button class="btn-tool clear-btn" onclick="clearAnswer()">
+                ↺ Clear Selection
+            </button>
+        </div>
+
+        <!-- NAVIGATION -->
+        <div class="question-navigation">
+            <button class="nav-question" id="prevBtn" onclick="goPrevious()">
+                ← Previous
+            </button>
+
+            <div class="q-numbers" id="qNumbers"></div>
+
+            <button class="nav-question primary-nav" id="nextBtn" onclick="goNext()">
+                Save & Next →
+            </button>
+        </div>
+
+    </section>
+
+
+    <!-- RIGHT: EXAM SIDEBAR & PALETTE -->
+    <aside class="exam-sidebar">
+
+        <div class="exam-summary">
+            <span>EXAM PROGRESS</span>
+            <div class="exam-progress-circle">
+                <b id="progressPct">0%</b>
+            </div>
+            <p id="progressText">0 of 0 answered</p>
+        </div>
+
+        <div class="palette">
+            <div class="palette-head">
+                <h3>Question Palette</h3>
+            </div>
+
+            <div class="palette-grid" id="paletteGrid"></div>
+
+            <div class="legend-box">
+                <div class="legend-item"><span class="legend-dot answered"></span> Answered</div>
+                <div class="legend-item"><span class="legend-dot unattempted"></span> Not Answered</div>
+                <div class="legend-item"><span class="legend-dot current"></span> Current Question</div>
+                <div class="legend-item"><span class="legend-dot flagged"></span> Marked for Review</div>
+                <div class="legend-item"><span class="legend-dot answered-flagged"></span> Answered & Review</div>
+            </div>
+        </div>
+
+        <button class="submit-exam" onclick="openSubmitModal()">
+            SUBMIT EXAMINATION ✓
+        </button>
+
+    </aside>
+
+</main>
+
+
+<!-- SUBMISSION CONFIRMATION MODAL -->
+<div id="submitConfirmModal" class="modal">
+    <div class="modal-box confirm-modal-box">
+        <button class="close" onclick="closeSubmitModal()">×</button>
+
+        <div class="confirm-modal-header">
+            <div class="modal-icon-badge">📋</div>
+            <h2>Submit Examination?</h2>
+            <p class="text-muted">Review your attempt summary before final submission.</p>
+        </div>
+
+        <div class="summary-stat-grid">
+            <div class="summary-box">
+                <small>Total Questions</small>
+                <b id="modalTotalQ">0</b>
+            </div>
+            <div class="summary-box green">
+                <small>Answered</small>
+                <b id="modalAnsweredQ">0</b>
+            </div>
+            <div class="summary-box orange">
+                <small>Unanswered</small>
+                <b id="modalUnansweredQ">0</b>
+            </div>
+            <div class="summary-box purple">
+                <small>Marked for Review</small>
+                <b id="modalFlaggedQ">0</b>
+            </div>
+        </div>
+
+        <div class="confirm-modal-actions">
+            <button class="btn secondary" onclick="closeSubmitModal()">
+                ← Continue Test
+            </button>
+            <button class="gradient-btn" onclick="confirmFinalSubmit()">
+                Confirm & Submit Test ✓
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script src="js/exam.js"></script>
+
+</body>
+</html>

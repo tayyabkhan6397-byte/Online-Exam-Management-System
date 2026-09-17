@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Student Portal | ExamSphere Pro</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+<div class="dashboard-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="logo">EXAM<span>SPHERE</span></div>
+            <span class="role-badge student-badge">STUDENT PORTAL</span>
+        </div>
+
+        <nav>
+            <button class="active" onclick="showStudentSection('availableExamsSection')">
+                🎯 Available Exams
+            </button>
+            <button onclick="showStudentSection('myResultsSection')">
+                🏆 My Results
+            </button>
+            <button onclick="showStudentSection('leaderboardSection')">
+                🥇 Leaderboard
+            </button>
+            <button onclick="showStudentSection('profileSection')">
+                👤 My Profile
+            </button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="logout-btn" onclick="logout()">
+                🚪 Logout
+            </button>
+        </div>
+
+    </aside>
+
+    <!-- CONTENT WRAPPER -->
+    <div class="dashboard-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <div>
+                <span class="text-muted">Welcome back,</span>
+                <h2 id="studentName">Student Portal</h2>
+            </div>
+            <div class="topbar-right">
+                <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeToggleBtn">🌙 Dark</button>
+                <a href="index.html" class="nav-btn small">Home</a>
+                <button class="btn-sm-danger" onclick="logout()">Logout</button>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+
+            <!-- AVAILABLE EXAMS SECTION -->
+            <section id="availableExamsSection" class="dashboard-section active">
+
+                <div class="section-heading">
+                    <div>
+                        <span>EXAMINATION DASHBOARD</span>
+                        <h1>Live Examinations</h1>
+                    </div>
+                </div>
+
+                <!-- OVERVIEW STATS -->
+                <div class="dashboard-cards">
+                    <div class="dash-card cyan">
+                        <span>🎯</span>
+                        <small>Available Tests</small>
+                        <b id="statAvailExams">0</b>
+                    </div>
+                    <div class="dash-card green">
+                        <span>📝</span>
+                        <small>Exams Completed</small>
+                        <b id="statMyAttempts">0</b>
+                    </div>
+                    <div class="dash-card purple">
+                        <span>⚡</span>
+                        <small>Average Score</small>
+                        <b id="statMyAvg">0%</b>
+                    </div>
+                </div>
+
+                <!-- SEARCH & FILTER TOOLBAR -->
+                <div class="exam-filter-toolbar">
+                    <div class="search-input-box">
+                        <span>🔍</span>
+                        <input type="text" id="examSearchInput" placeholder="Search exams by title or subject..." oninput="filterExams()">
+                    </div>
+
+                    <div class="category-pills" id="subjectFilterPills">
+                        <button class="cat-pill active" onclick="setSubjectFilter('all')">All Subjects</button>
+                        <button class="cat-pill" onclick="setSubjectFilter('Web Development')">Web Dev</button>
+                        <button class="cat-pill" onclick="setSubjectFilter('Data Structures & Algorithms')">DSA</button>
+                        <button class="cat-pill" onclick="setSubjectFilter('Python Programming')">Python</button>
+                        <button class="cat-pill" onclick="setSubjectFilter('Database Systems (SQL)')">SQL</button>
+                        <button class="cat-pill" onclick="setSubjectFilter('Computer Networks & Security')">Networks</button>
+                        <button class="cat-pill" onclick="setSubjectFilter('General Aptitude & Logic')">Aptitude</button>
+                    </div>
+                </div>
+
+                <!-- EXAM CARDS GRID -->
+                <div class="exam-grid" id="studentExamGrid">
+                    <p class="text-muted">Loading available examinations...</p>
+                </div>
+
+            </section>
+
+
+            <!-- MY RESULTS SECTION -->
+            <section id="myResultsSection" class="dashboard-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span>PERFORMANCE HISTORY</span>
+                        <h1>My Exam Results</h1>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head">
+                        <h3>Attempt History</h3>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Exam</th>
+                                    <th>Score</th>
+                                    <th>Percentage</th>
+                                    <th>Result</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentResultsBody">
+                                <tr><td colspan="6">Loading results...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- LEADERBOARD SECTION -->
+            <section id="leaderboardSection" class="dashboard-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span>TOP PERFORMERS</span>
+                        <h1>Student Leaderboard</h1>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head">
+                        <h3>Rankings & Overall Standing</h3>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Student</th>
+                                    <th>Exams Completed</th>
+                                    <th>Total Score</th>
+                                    <th>Standing</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboardBody">
+                                <tr><td colspan="5">Loading rankings...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- PROFILE SECTION -->
+            <section id="profileSection" class="dashboard-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span>ACCOUNT SETTINGS</span>
+                        <h1>My Profile</h1>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-avatar" id="profileAvatar">🎓</div>
+                    <div class="profile-info">
+                        <h2 id="profileName">-</h2>
+                        <p id="profileEmail" class="text-muted">-</p>
+                        <span class="status completed">Active Student</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-cards" style="margin-top:1.5rem;">
+                    <div class="dash-card blue">
+                        <span>🎯</span>
+                        <small>Exams Attempted</small>
+                        <b id="profileExams">0</b>
+                    </div>
+                    <div class="dash-card green">
+                        <span>🏆</span>
+                        <small>Passed</small>
+                        <b id="profilePassed">0</b>
+                    </div>
+                    <div class="dash-card purple">
+                        <span>📈</span>
+                        <small>Best Score</small>
+                        <b id="profileBest">0%</b>
+                    </div>
+                    <div class="dash-card cyan">
+                        <span>⭐</span>
+                        <small>Avg Score</small>
+                        <b id="profileAvg">0%</b>
+                    </div>
+                </div>
+
+                <div class="panel" style="margin-top:1.5rem;">
+                    <div class="panel-head">
+                        <h3>Change Password</h3>
+                    </div>
+                    <form onsubmit="changePassword(event)" style="padding:1.5rem; display:flex; flex-direction:column; gap:1rem; max-width:400px;">
+                        <div>
+                            <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Current Password</label>
+                            <input type="password" id="currentPass" placeholder="Enter current password" style="width:100%; padding:0.75rem; border:1.5px solid var(--border); border-radius:10px; background:var(--input-bg); color:var(--text-primary);">
+                        </div>
+                        <div>
+                            <label style="display:block; margin-bottom:0.5rem; font-weight:600;">New Password</label>
+                            <input type="password" id="newPass" placeholder="Enter new password" style="width:100%; padding:0.75rem; border:1.5px solid var(--border); border-radius:10px; background:var(--input-bg); color:var(--text-primary);">
+                        </div>
+                        <div>
+                            <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Confirm New Password</label>
+                            <input type="password" id="confirmNewPass" placeholder="Confirm new password" style="width:100%; padding:0.75rem; border:1.5px solid var(--border); border-radius:10px; background:var(--input-bg); color:var(--text-primary);">
+                        </div>
+                        <button class="gradient-btn" type="submit" style="align-self:flex-start;">Update Password</button>
+                        <p id="changePassMsg" class="login-msg"></p>
+                    </form>
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script>
+    const user = requireRole("student");
+    let allExamsList = [];
+    let activeSubjectFilter = "all";
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        if (user) {
+            const nameEl = document.getElementById("studentName");
+            if (nameEl) nameEl.textContent = user.name || "Student";
+        }
+        await loadStudentDashboard();
+    });
+
+    async function loadStudentDashboard() {
+        await loadAvailableExams();
+        await loadMyResults();
+        await loadLeaderboard();
+        loadProfile();
+    }
+
+    function showStudentSection(id) {
+        document.querySelectorAll(".dashboard-section").forEach(s => s.classList.remove("active"));
+        const target = document.getElementById(id);
+        if (target) target.classList.add("active");
+
+        document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+        const sectionMap = {
+            availableExamsSection: 0,
+            myResultsSection: 1,
+            leaderboardSection: 2,
+            profileSection: 3
+        };
+        const idx = sectionMap[id];
+        const navBtns = document.querySelectorAll("nav button");
+        if (idx !== undefined && navBtns[idx]) navBtns[idx].classList.add("active");
+    }
+
+    async function loadAvailableExams() {
+        const grid = document.getElementById("studentExamGrid");
+        const statEl = document.getElementById("statAvailExams");
+        try {
+            const data = await API.getExams();
+            allExamsList = data.exams || [];
+            if (statEl) statEl.textContent = allExamsList.length;
+
+            renderExamCards(allExamsList);
+        } catch (error) {
+            console.error("Error loading exams:", error);
+            if (grid) grid.innerHTML = `<p style="color:red;">❌ Failed to load exams.</p>`;
+        }
+    }
+
+    function renderExamCards(exams) {
+        const grid = document.getElementById("studentExamGrid");
+        if (!grid) return;
+        grid.innerHTML = "";
+
+        if (exams.length === 0) {
+            grid.innerHTML = "<p class='text-muted'>No exams match your search or filter.</p>";
+            return;
+        }
+
+        exams.forEach(exam => {
+            const card = document.createElement("div");
+            card.className = "student-exam-card";
+
+            const diffClass = (exam.difficulty || "Intermediate").toLowerCase();
+
+            card.innerHTML = `
+                <div class="exam-card-header">
+                    <span class="subject-badge">${escapeHTML(exam.subject)}</span>
+                    <span class="diff-badge ${diffClass}">${escapeHTML(exam.difficulty || "Intermediate")}</span>
+                </div>
+                <h3>${escapeHTML(exam.name)}</h3>
+                <div class="exam-details-list">
+                    <div><span>⏱ Duration:</span> <b>${exam.duration} mins</b></div>
+                    <div><span>📝 Questions:</span> <b>${exam.num_questions}</b></div>
+                    <div><span>🎯 Marks:</span> <b>${exam.total_marks}</b></div>
+                </div>
+                <div class="exam-card-footer">
+                    <span class="pass-info">Pass Criteria: 40%</span>
+                    <button class="gradient-btn full-width" onclick='beginExam(${JSON.stringify(exam).replace(/'/g, "&#39;")})'>
+                        Start Examination →
+                    </button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    function setSubjectFilter(subject) {
+        activeSubjectFilter = subject;
+        document.querySelectorAll(".cat-pill").forEach(p => p.classList.remove("active"));
+        event.target.classList.add("active");
+        filterExams();
+    }
+
+    function filterExams() {
+        const query = (document.getElementById("examSearchInput")?.value || "").toLowerCase().trim();
+
+        let filtered = allExamsList.filter(exam => {
+            const matchesSubject = activeSubjectFilter === "all" ||
+                exam.subject.toLowerCase() === activeSubjectFilter.toLowerCase();
+            const matchesSearch = !query ||
+                exam.name.toLowerCase().includes(query) ||
+                exam.subject.toLowerCase().includes(query);
+            return matchesSubject && matchesSearch;
+        });
+
+        renderExamCards(filtered);
+    }
+
+    function beginExam(exam) {
+        sessionStorage.setItem("currentExam", JSON.stringify(exam));
+        window.location.href = "exam.html";
+    }
+
+    async function loadMyResults() {
+        const body = document.getElementById("studentResultsBody");
+        const statAttempts = document.getElementById("statMyAttempts");
+        const statAvg = document.getElementById("statMyAvg");
+
+        try {
+            const data = await API.getResults();
+            const results = data.results || [];
+            const myResults = results.filter(r => String(r.student_id) === String(user.id) || r.student_name === user.name);
+
+            if (statAttempts) statAttempts.textContent = myResults.length;
+
+            let totalPct = 0;
+            if (myResults.length > 0) {
+                myResults.forEach(r => totalPct += Number(r.percentage || 0));
+                if (statAvg) statAvg.textContent = `${Math.round(totalPct / myResults.length)}%`;
+            } else {
+                if (statAvg) statAvg.textContent = "0%";
+            }
+
+            if (!body) return;
+            body.innerHTML = "";
+
+            if (myResults.length === 0) {
+                body.innerHTML = `<tr><td colspan="6">You have not attempted any examinations yet.</td></tr>`;
+                return;
+            }
+
+            myResults.forEach(res => {
+                const passed = Number(res.percentage) >= 40;
+                body.innerHTML += `
+                    <tr>
+                        <td><b>${escapeHTML(res.exam_name)}</b></td>
+                        <td>${res.score} / ${res.total_marks}</td>
+                        <td><b>${res.percentage}%</b></td>
+                        <td><span class="status ${passed ? 'completed' : 'failed'}">${passed ? 'Passed' : 'Failed'}</span></td>
+                        <td>${res.submitted_at ? res.submitted_at.substring(0, 10) : (res.date || 'Recent')}</td>
+                        <td>
+                            <a href="result.html?exam=${encodeURIComponent(res.exam_name)}&score=${res.score}&total=${res.total_marks}&correct=${res.correct || res.score}&totalQuestions=${res.total_questions || res.attempted || 8}" class="view-report-link">
+                                View Report →
+                            </a>
+                        </td>
+                    </tr>
+                `;
+            });
+        } catch (error) {
+            console.error("Error loading results:", error);
+        }
+    }
+
+    async function loadLeaderboard() {
+        const body = document.getElementById("leaderboardBody");
+        try {
+            const data = await API.getLeaderboard();
+            const list = data.leaderboard || [];
+
+            if (!body) return;
+            body.innerHTML = "";
+
+            if (list.length === 0) {
+                body.innerHTML = `<tr><td colspan="5">No rankings available yet.</td></tr>`;
+                return;
+            }
+
+            list.forEach((item, idx) => {
+                const rankBadge = idx === 0 ? "🥇 1st" : idx === 1 ? "🥈 2nd" : idx === 2 ? "🥉 3rd" : `#${idx + 1}`;
+                body.innerHTML += `
+                    <tr>
+                        <td><b>${rankBadge}</b></td>
+                        <td>${escapeHTML(item.student_name)}</td>
+                        <td>${item.exams_attempted || item.total_exams || 1}</td>
+                        <td><b>${item.total_score || item.avg_score || 0} pts</b></td>
+                        <td><span class="status completed">${item.percentage ? item.percentage + '%' : (item.avg_score ? Math.round(item.avg_score) + '%' : 'N/A')}</span></td>
+                    </tr>
+                `;
+            });
+        } catch (error) {
+            console.error("Error loading leaderboard:", error);
+        }
+    }
+
+    function loadProfile() {
+        if (!user) return;
+
+        const nameEl = document.getElementById("profileName");
+        const emailEl = document.getElementById("profileEmail");
+        if (nameEl) nameEl.textContent = user.name || "Student";
+        if (emailEl) emailEl.textContent = user.email || "";
+
+        // Load stats from results
+        API.getResults().then(data => {
+            const results = data.results || [];
+            const myResults = results.filter(r => String(r.student_id) === String(user.id) || r.student_name === user.name);
+
+            const attempted = myResults.length;
+            const passed = myResults.filter(r => Number(r.percentage) >= 40).length;
+            let best = 0;
+            let totalPct = 0;
+
+            myResults.forEach(r => {
+                const p = Number(r.percentage || 0);
+                if (p > best) best = p;
+                totalPct += p;
+            });
+
+            const avg = attempted > 0 ? Math.round(totalPct / attempted) : 0;
+
+            const elExams = document.getElementById("profileExams");
+            const elPassed = document.getElementById("profilePassed");
+            const elBest = document.getElementById("profileBest");
+            const elAvg = document.getElementById("profileAvg");
+
+            if (elExams) elExams.textContent = attempted;
+            if (elPassed) elPassed.textContent = passed;
+            if (elBest) elBest.textContent = `${best}%`;
+            if (elAvg) elAvg.textContent = `${avg}%`;
+        }).catch(() => {});
+    }
+
+    function changePassword(event) {
+        event.preventDefault();
+        const msg = document.getElementById("changePassMsg");
+        const current = document.getElementById("currentPass")?.value || "";
+        const newP = document.getElementById("newPass")?.value || "";
+        const confirm = document.getElementById("confirmNewPass")?.value || "";
+
+        if (!current || !newP || !confirm) {
+            if (msg) msg.textContent = "❌ Please fill all password fields.";
+            return;
+        }
+
+        if (newP !== confirm) {
+            if (msg) msg.textContent = "❌ New passwords do not match.";
+            return;
+        }
+
+        if (newP.length < 6) {
+            if (msg) msg.textContent = "❌ Password must be at least 6 characters.";
+            return;
+        }
+
+        // Verify current password against stored user
+        const users = JSON.parse(localStorage.getItem("es_users") || "[]");
+        const storedUser = users.find(u => u.id === user.id);
+
+        if (!storedUser || storedUser.password !== current) {
+            if (msg) msg.textContent = "❌ Current password is incorrect.";
+            return;
+        }
+
+        // Update password
+        storedUser.password = newP;
+        localStorage.setItem("es_users", JSON.stringify(users));
+        if (msg) msg.textContent = "✅ Password updated successfully!";
+
+        // Clear fields
+        document.getElementById("currentPass").value = "";
+        document.getElementById("newPass").value = "";
+        document.getElementById("confirmNewPass").value = "";
+
+        setTimeout(() => { if (msg) msg.textContent = ""; }, 3000);
+    }
+
+    function escapeHTML(value) {
+        if (!value) return "";
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+</script>
+
+    
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | ExamSphere</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="auth-body">
+
+    <!-- MAIN AUTH CONTAINER -->
+    <div class="auth-container">
+
+        <!-- BRAND -->
+        <div class="auth-brand">
+            <div class="logo">
+                EXAM<span>SPHERE</span>
+            </div>
+
+            <p>Smart • Secure • Digital Examination</p>
+        </div>
+
+
+        <!-- LOGIN BOX -->
+        <div class="auth-box">
+
+            <!-- STUDENT / ADMIN TABS -->
+            <div class="role-tabs">
+
+                <button
+                    id="studentTab"
+                    class="active"
+                    type="button"
+                    onclick="setRole('student')">
+                    👨‍🎓 Student
+                </button>
+
+                <button
+                    id="adminTab"
+                    type="button"
+                    onclick="setRole('admin')">
+                    👨‍💼 Admin
+                </button>
+
+            </div>
+
+
+            <!-- LOGIN ICON -->
+            <div class="login-icon">
+                🔐
+            </div>
+
+
+            <!-- LOGIN TITLE -->
+            <h1 id="loginTitle">
+                Student Login
+            </h1>
+
+            <p class="auth-sub">
+                Enter your credentials to continue
+            </p>
+
+
+            <!-- LOGIN FORM -->
+            <form onsubmit="login(event)">
+
+                <!-- EMAIL -->
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                    autocomplete="email"
+                >
+
+
+                <!-- PASSWORD -->
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="password-box">
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter password"
+                        required
+                        autocomplete="current-password"
+                    >
+
+                    <button
+                        type="button"
+                        onclick="togglePassword()"
+                        aria-label="Show or hide password">
+                        👁
+                    </button>
+
+                </div>
+
+
+                <!-- LOGIN BUTTON -->
+                <button
+                    type="submit"
+                    class="auth-btn">
+                    LOGIN →
+                </button>
+
+            </form>
+
+
+            <!-- LOGIN MESSAGE -->
+            <p
+                id="loginMsg"
+                class="login-msg">
+            </p>
+
+
+            <!-- REGISTER -->
+            <p class="register-text">
+                New student?
+                <a href="register.html">
+                    Create Account
+                </a>
+            </p>
+
+
+            <!-- BACK TO HOME -->
+            <a
+                href="index.html"
+                class="back-home">
+                ← Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

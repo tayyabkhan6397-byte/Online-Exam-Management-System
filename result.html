@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Detailed Examination Report | ExamSphere Pro</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+<div class="result-page-wrapper">
+
+    <!-- TOP HEADER -->
+    <header class="topbar">
+        <div class="logo">EXAM<span>SPHERE</span></div>
+        <div class="topbar-right">
+            <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeToggleBtn">🌙 Dark</button>
+            <a href="student.html" class="nav-btn small">Student Portal</a>
+            <a href="index.html" class="btn-sm-danger">Logout</a>
+        </div>
+    </header>
+
+    <main class="result-container">
+
+        <!-- SCORE SUMMARY HERO CARD -->
+        <section class="result-hero-card">
+
+            <div class="result-header">
+                <div class="result-icon-circle" id="resultIcon">🎉</div>
+                <div class="grade-pill-badge" id="gradeBadge">GRADE A</div>
+                <h1 id="resultExamName">Examination Report</h1>
+                <p id="resultMessage" class="result-submessage">
+                    Your answers have been evaluated with instant detailed grading.
+                </p>
+            </div>
+
+            <!-- SCORE BIG DISPLAY -->
+            <div class="score-display-wrapper">
+                <div class="score-main">
+                    <span class="score-big" id="finalScore">0</span>
+                    <span class="score-total" id="finalScoreTotal">/ 0 Marks</span>
+                </div>
+                <div class="percentage-pill" id="percentage">0%</div>
+            </div>
+
+            <!-- 4-METRIC STATS -->
+            <div class="result-stats-row">
+                <div class="res-stat-box">
+                    <small>Correct</small>
+                    <b id="statCorrect" class="text-green">0</b>
+                </div>
+                <div class="res-stat-box">
+                    <small>Incorrect</small>
+                    <b id="statWrong" class="text-red">0</b>
+                </div>
+                <div class="res-stat-box">
+                    <small>Total Questions</small>
+                    <b id="statTotalQuestions">0</b>
+                </div>
+                <div class="res-stat-box">
+                    <small>Accuracy</small>
+                    <b id="statPercentage" class="text-purple">0%</b>
+                </div>
+            </div>
+
+            <div class="result-hero-actions">
+                <a href="student.html" class="gradient-btn">
+                    Back to Student Dashboard →
+                </a>
+                <a href="#questionReviewSection" class="btn secondary">
+                    Review Questions & Answers ↓
+                </a>
+            </div>
+
+        </section>
+
+
+        <!-- DETAILED QUESTION-BY-QUESTION REVIEW SECTION -->
+        <section class="review-section" id="questionReviewSection">
+
+            <div class="review-section-head">
+                <div>
+                    <span>PERFORMANCE ANALYSIS</span>
+                    <h2>Question-by-Question Review</h2>
+                </div>
+                <div class="review-filter-pills">
+                    <button class="filter-pill active" onclick="filterReview('all')">All Questions</button>
+                    <button class="filter-pill" onclick="filterReview('correct')">✓ Correct</button>
+                    <button class="filter-pill" onclick="filterReview('wrong')">✗ Incorrect</button>
+                    <button class="filter-pill" onclick="filterReview('unanswered')">⚪ Skipped</button>
+                </div>
+            </div>
+
+            <!-- DYNAMIC QUESTION REVIEW LIST -->
+            <div class="review-list" id="reviewListContainer">
+                <p class="text-muted">Loading question analysis...</p>
+            </div>
+
+            <div class="review-bottom-actions">
+                <a href="student.html" class="gradient-btn">
+                    Done Reviewing — Return to Dashboard
+                </a>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script src="js/result.js"></script>
+
+</body>
+</html>
